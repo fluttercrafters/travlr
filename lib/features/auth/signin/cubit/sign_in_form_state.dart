@@ -2,8 +2,8 @@ part of 'sign_in_form_cubit.dart';
 
 class SignInFormState extends Equatable with FormzMixin {
   const SignInFormState({
-    this.email = const EmailInput.pure(),
-    this.password = const PasswordInput.pure(),
+    this.email = const EmailInput.dirty('me@codingale.dev'),
+    this.password = const PasswordInput.dirty('P@ssw0rd'),
   });
 
   final EmailInput email;

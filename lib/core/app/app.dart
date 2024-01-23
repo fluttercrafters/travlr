@@ -1,3 +1,4 @@
+import 'package:domain/repositories/config_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travlr/features/auth/auth.dart';
@@ -13,9 +14,10 @@ class TravlrApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (_) => AuthBloc(
-                  context.read(),
-                )),
+          create: (_) => AuthBloc(
+            context.read(),
+          ),
+        ),
       ],
       child: const _BaseApp(),
     );
@@ -30,9 +32,27 @@ class _BaseApp extends StatefulWidget {
 }
 
 class _BaseAppState extends State<_BaseApp> {
+  bool _isInitialized = false;
   final _navigationKey = GlobalKey<NavigatorState>();
 
   NavigatorState? get _navigator => _navigationKey.currentState;
+
+  @override
+  void initState() {
+    super.initState();
+
+    setup();
+  }
+
+  Future<void> setup() async {
+    final configRepository = context.read<ConfigRepository>();
+
+    await configRepository.initialize();
+
+    setState(() {
+      _isInitialized = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,32 +72,34 @@ class _BaseAppState extends State<_BaseApp> {
           style: ElevatedButton.styleFrom(minimumSize: const Size(32, 56)),
         ),
       ),
-      builder: (context, child) => BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          switch (state.status) {
-            case AuthStatus.unknown:
-              _navigator?.pushAndRemoveUntil(
-                SplashPage.route(),
-                (route) => false,
-              );
-              break;
-            case AuthStatus.authenticated:
-              _navigator?.pushAndRemoveUntil(
-                HomePage.route(),
-                (route) => false,
-              );
-              break;
+      builder: _isInitialized
+          ? (context, child) => BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  switch (state.status) {
+                    case AuthStatus.unknown:
+                      _navigator?.pushAndRemoveUntil(
+                        SplashPage.route(),
+                        (route) => false,
+                      );
+                      break;
+                    case AuthStatus.authenticated:
+                      _navigator?.pushAndRemoveUntil(
+                        HomePage.route(),
+                        (route) => false,
+                      );
+                      break;
 
-            case AuthStatus.unauthenticated:
-              _navigator?.pushAndRemoveUntil(
-                SignInPage.route(),
-                (route) => false,
-              );
-              break;
-          }
-        },
-        child: child,
-      ),
+                    case AuthStatus.unauthenticated:
+                      _navigator?.pushAndRemoveUntil(
+                        SignInPage.route(),
+                        (route) => false,
+                      );
+                      break;
+                  }
+                },
+                child: child,
+              )
+          : null,
       onGenerateRoute: (_) => SplashPage.route(),
     );
   }

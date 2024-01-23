@@ -2,12 +2,15 @@ name: data
 description: "A new Flutter package project."
 version: 0.0.1
 homepage:
+publish_to: 'none'
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
+  amplify_auth_cognito: ^1.6.1
+  amplify_flutter: ^1.6.1
   domain:
     path: ../domain
   flutter:
