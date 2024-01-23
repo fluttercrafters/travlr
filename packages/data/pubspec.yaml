@@ -8,6 +8,8 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  domain:
+    path: ../domain
   flutter:
     sdk: flutter
 

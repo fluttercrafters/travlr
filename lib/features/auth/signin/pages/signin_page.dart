@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travlr/features/auth/widgets/signin_form.dart';
+import 'package:travlr/features/auth/signin/widgets/signin_form.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
