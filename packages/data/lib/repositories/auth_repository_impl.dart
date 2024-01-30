@@ -27,12 +27,11 @@ class AuthRepositoryImpl extends AuthRepository {
           _authenticated();
         }
       case AuthHubEventType.signedOut:
+      case AuthHubEventType.sessionExpired:
+      case AuthHubEventType.userDeleted:
         {
           _unauthenticated();
         }
-      case AuthHubEventType.sessionExpired:
-      case AuthHubEventType.userDeleted:
-      // TODO: Handle this case.
     }
   }
 

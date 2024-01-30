@@ -1,0 +1,1 @@
+export 'pages/journals_page.dart';
