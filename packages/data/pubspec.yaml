@@ -11,17 +11,28 @@ environment:
 dependencies:
   amplify_auth_cognito: ^1.6.1
   amplify_flutter: ^1.6.1
+  chopper: ^7.1.1
   domain:
     path: ../domain
   flutter:
     sdk: flutter
   http: ^1.2.0
+  json_annotation: ^4.8.1
+  json_serializable: ^6.7.1
   rxdart: ^0.27.7
+  drift: ^2.12.0
+  sqlite3_flutter_libs: ^0.5.0
+  path_provider: ^2.0.0
+  path: ^1.8.3
+  sqlite3: ^2.3.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  build_runner: ^2.4.8
+  chopper_generator: ^7.1.1
+  drift_dev: ^2.12.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

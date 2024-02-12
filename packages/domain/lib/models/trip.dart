@@ -8,9 +8,4 @@ class Trip {
   final String destination;
   final DateTime date;
   final String imageUrl;
-
-  Trip.fromJson(Map<String, dynamic> json)
-      : destination = json['photographer'],
-        date = DateTime.now(),
-        imageUrl = json['src']['original'];
 }

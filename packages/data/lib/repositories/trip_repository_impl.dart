@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:data/database/database.dart';
 import 'package:data/pexels/pexels.dart';
 import 'package:domain/models/trip.dart';
 import 'package:domain/repositories/trip_repository.dart';
+import 'package:drift/drift.dart';
 import 'package:rxdart/rxdart.dart';
 
 final tripEntries = [
@@ -33,6 +35,8 @@ final tripEntries = [
 ];
 
 class TripRepositoryImpl extends TripRepository {
+  final List<String> _searchHistory = [];
+
   @override
   Future<List<Trip>> fetchTrips() async {
     await Future.delayed(const Duration(seconds: 2));
@@ -49,19 +53,38 @@ class TripRepositoryImpl extends TripRepository {
 
   @override
   Future<List<Trip>> search({required String query}) async {
-    // TODO Load from API
-    final response = await PexelsApi.fetch<List<Trip>>(
-      '/search',
-      queryParameters: {
-        'query': query,
-      },
-      fromJson: (json) {
-        return (json['photos'] as List)
-            .map((rawPhoto) => Trip.fromJson(rawPhoto))
-            .toList();
-      },
+    final database = AppDatabase();
+
+    if (_searchHistory.contains(query)) {
+      final dbTrips = await database.tripItems.select().get();
+
+      return dbTrips
+          .map(
+            (e) => Trip(
+                destination: e.destination,
+                date: e.date ?? DateTime.now(),
+                imageUrl: e.imageUrl),
+          )
+          .toList();
+    }
+
+    final response =
+        await PexelsApi.client.getService<PhotoService>().searchPhotos(query);
+    // final model = SearchPhotoResponse.fromJson(response.body);
+
+    final trips = response.body?.photos.map((photo) => photo.toTrip()).toList() ?? [];
+
+    _searchHistory.add(query);
+    database.tripItems.insertAll(
+      trips
+          .map((e) => TripItemsCompanion(
+                destination: Value(e.destination),
+                date: Value(e.date),
+                imageUrl: Value(e.imageUrl),
+              ))
+          .toList(),
     );
 
-    return response;
+    return trips;
   }
 }

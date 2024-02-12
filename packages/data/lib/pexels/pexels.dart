@@ -1,41 +1,47 @@
-import 'dart:convert';
+import 'dart:async';
 
-import 'package:http/http.dart' as http;
+import 'package:chopper/chopper.dart';
+import 'package:data/pexels/responses/search_photo_response.dart';
+import 'package:flutter/foundation.dart';
+
+// This is necessary for the generator to work.
+part "pexels.chopper.dart";
 
 final _baseUrl = Uri.parse('https://api.pexels.com');
 
 const _apiKey = 'mMvz9HpzD29UuXAecX7cDvxmj5lQH7jOKHEJxYoEtADMs1JIIl2LeN5V';
 
 abstract class PexelsApi {
-  static Future<T> fetch<T>(
-    String path, {
-    Map<String, dynamic>? queryParameters,
-    required T Function(dynamic) fromJson,
-  }) async {
-    final response = await http.get(
-      _baseUrl.replace(
-        path: '/v1/$path',
-        queryParameters: queryParameters,
-      ),
-      headers: {'Authorization': _apiKey},
-    );
+  static late ChopperClient client;
 
-    if (response.statusCode == 200) {
-      return fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load data');
-    }
+  static Future<void> initialize() async {
+    client = ChopperClient(
+      baseUrl: _baseUrl,
+      converter: const JsonConverter(),
+      errorConverter: const JsonConverter(),
+      interceptors: [
+        if (kDebugMode) HttpLoggingInterceptor(),
+        (Request request) {
+          return request.copyWith(
+            headers: {
+              'Authorization': _apiKey,
+            },
+          );
+        }
+      ],
+      services: [
+        PhotoService.create(),
+      ],
+    );
   }
 }
 
-const map = {
-  'photos': [
-    {
-      'photographer': 'John Doe',
-      'src': {
-        'original': 'https://images.pexels.com/photos/699466/pexels-photo-699466.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      },
-    },
-  ],
-};
+@ChopperApi(baseUrl: '/v1')
+abstract class PhotoService extends ChopperService {
+  @Get(path: '/search')
+  Future<Response<SearchPhotoResponse>> searchPhotos(
+    @Query() String query,
+  );
 
+  static PhotoService create([ChopperClient? client]) => _$PhotoService(client);
+}

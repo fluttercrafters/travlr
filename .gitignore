@@ -44,3 +44,7 @@ app.*.map.json
 
 # FVM related
 .fvm/flutter_sdk
+
+# Generation Files
+**.chopper.dart
+**.g.dart
