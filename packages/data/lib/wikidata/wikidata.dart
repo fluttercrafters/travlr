@@ -4,13 +4,13 @@ import 'package:chopper/chopper.dart';
 import 'package:flutter/foundation.dart';
 
 // This is necessary for the generator to work.
-part "pexels.chopper.dart";
+part "wikidata.chopper.dart";
 
-final _baseUrl = Uri.parse('https://api.pexels.com');
+final _baseUrl = Uri.parse('https://query.wikidata.org');
 
-const _apiKey = 'mMvz9HpzD29UuXAecX7cDvxmj5lQH7jOKHEJxYoEtADMs1JIIl2LeN5V';
+const _apiKey = '3178c0a62emshe339f216426215ap12b38bjsn3ec012cea620';
 
-abstract class PexelsApi {
+abstract class WikiDataApi {
   static late ChopperClient client;
 
   static Future<void> initialize() async {
@@ -22,25 +22,26 @@ abstract class PexelsApi {
         if (kDebugMode) HttpLoggingInterceptor(),
         (Request request) {
           return request.copyWith(
-            headers: {
-              'Authorization': _apiKey,
-            },
+            parameters: request.parameters
+              ..addAll({
+                'format': 'json',
+              }),
           );
         }
       ],
       services: [
-        PhotoService.create(),
+        QueryService.create(),
       ],
     );
   }
 }
 
 @ChopperApi(baseUrl: '/v1')
-abstract class PhotoService extends ChopperService {
+abstract class QueryService extends ChopperService {
   @Get(path: '/search')
   Future<Response<Map<String, dynamic>>> searchPhotos(
     @Query() String query,
   );
 
-  static PhotoService create([ChopperClient? client]) => _$PhotoService(client);
+  static QueryService create([ChopperClient? client]) => _$QueryService(client);
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:data/database/database.dart';
 import 'package:data/pexels/pexels.dart';
+import 'package:data/pexels/responses/search_photo_response.dart';
 import 'package:domain/models/trip.dart';
 import 'package:domain/repositories/trip_repository.dart';
 import 'package:drift/drift.dart';
@@ -56,9 +57,11 @@ class TripRepositoryImpl extends TripRepository {
     final database = AppDatabase();
 
     if (_searchHistory.contains(query)) {
-      final dbTrips = await database.tripItems.select().get();
+      final dbTrips = await (database.tripItems.select()
+            ..where((item) => item.destination.lower().contains(query)))
+          .get();
 
-      return dbTrips
+      final trips = dbTrips
           .map(
             (e) => Trip(
                 destination: e.destination,
@@ -66,13 +69,18 @@ class TripRepositoryImpl extends TripRepository {
                 imageUrl: e.imageUrl),
           )
           .toList();
+
+      await database.close();
+
+      return trips;
     }
 
-    final response =
+    final searchJson =
         await PexelsApi.client.getService<PhotoService>().searchPhotos(query);
-    // final model = SearchPhotoResponse.fromJson(response.body);
 
-    final trips = response.body?.photos.map((photo) => photo.toTrip()).toList() ?? [];
+    final searchResponse = SearchPhotoResponse.fromJson(searchJson.body ?? {});
+
+    final trips = searchResponse.photos.map((photo) => photo.toTrip()).toList();
 
     _searchHistory.add(query);
     database.tripItems.insertAll(
