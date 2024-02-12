@@ -7,7 +7,7 @@ final class SearchResultsState extends Equatable {
   });
 
   final List<Trip> trips;
-  final isLoading;
+  final bool isLoading;
 
   @override
   List<Object> get props => [
