@@ -9,3 +9,4 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 TRAVLR_APP_NAME=Travlr
 TRAVLR_APP_SUFFIX=
+TRAVLR_IOS_ICON=AppIcon

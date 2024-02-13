@@ -6,10 +6,12 @@ plugins {
 
 def dartDefineVariables = [
         TRAVLR_APP_NAME: 'Travlr',
-        TRAVLR_APP_SUFFIX: null
+        TRAVLR_APP_SUFFIX: null,
+        TRAVLR_ANDROID_ICON: 'launcher_icon'
 ]
+
 if(project.hasProperty('dart-defines')) {
-    dartDefineVariables = dartDefineVariables + project.project('dart-defines').split(',').collectEntries {
+    dartDefineVariables = dartDefineVariables + project.property('dart-defines').split(',').collectEntries {
         entry ->
             def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
             [(pair.first()): pair.last()]
@@ -56,12 +58,16 @@ android {
         applicationId "pro.fluttercrafters.travlr"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 24
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         resValue "string", "app_name", dartDefineVariables.TRAVLR_APP_NAME
         applicationIdSuffix dartDefineVariables.TRAVLR_APP_SUFFIX
+        manifestPlaceholders = [
+                applicationName: dartDefineVariables.TRAVLR_APP_NAME,
+                appIcon: '@mipmap/' + dartDefineVariables.TRAVLR_ANDROID_ICON,
+        ]
     }
 
     buildTypes {
