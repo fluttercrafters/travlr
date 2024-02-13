@@ -11,6 +11,8 @@ dependencies:
     path: ./packages/domain
   data:
     path: ./packages/data
+  environment:
+    path: ./packages/environment
   equatable: ^2.0.5
   flutter:
     sdk: flutter
