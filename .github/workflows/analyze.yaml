@@ -19,7 +19,7 @@ jobs:
           cache: true
 
       - name: 📦 Get dependencies
-        run: flutter pub get
+        run: cd packages/data && flutter pub get && cd ../.. && cd packages/domain && flutter pub get && cd ../.. && cd packages/environment && flutter pub get && cd ../.. && flutter pub get
 
       - name: 🏗️ Build Runner
         run: cd packages/data && dart run build_runner build --delete-conflicting-outputs && cd ../..
