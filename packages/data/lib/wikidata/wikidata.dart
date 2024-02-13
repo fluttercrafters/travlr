@@ -8,8 +8,6 @@ part "wikidata.chopper.dart";
 
 final _baseUrl = Uri.parse('https://query.wikidata.org');
 
-const _apiKey = '3178c0a62emshe339f216426215ap12b38bjsn3ec012cea620';
-
 abstract class WikiDataApi {
   static late ChopperClient client;
 

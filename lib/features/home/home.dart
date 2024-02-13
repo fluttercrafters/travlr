@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travlr/features/auth/bloc/auth_bloc.dart';
 import 'package:travlr/features/discover/discover.dart';
 import 'package:travlr/features/journal/journal.dart';
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Travlr',
+          AppLocalizations.of(context)!.helloWorld,
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                 color: Theme.of(context).colorScheme.onPrimaryContainer,
                 fontWeight: FontWeight.bold,

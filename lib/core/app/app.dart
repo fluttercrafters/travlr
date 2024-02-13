@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:travlr/core/app/navigation.dart';
 import 'package:travlr/core/theme/theme.dart';
 import 'package:travlr/features/auth/bloc/auth_bloc.dart';
@@ -43,6 +44,9 @@ class TravlrApp extends StatelessWidget {
                     ElevatedButton.styleFrom(minimumSize: const Size(32, 56)),
               ),
             ),
+        title: 'Travlr',
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
       ),
     );
   }

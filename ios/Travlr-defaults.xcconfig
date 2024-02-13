@@ -1,0 +1,11 @@
+//
+//  Travlr.xcconfig
+//  Runner
+//
+//  Created by Alejandro on 12/2/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+TRAVLR_APP_NAME=Travlr
+TRAVLR_APP_SUFFIX=

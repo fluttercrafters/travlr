@@ -5,22 +5,52 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "travlr",
+            "name": "Development",
             "request": "launch",
             "type": "dart",
             "program": "lib/main.dart",
+            "args": [
+                "--dart-define",
+                "TRAVLR_APP_NAME=Travlr Dev",
+                "--dart-define",
+                "TRAVLR_APP_SUFFIX=.dev",
+                "--dart-define",
+                "TRAVLR_COGNITO_IDENTITY_REGION=us-east-1",
+                "--dart-define",
+                "TRAVLR_COGNITO_IDENTITY_POOL_ID=us-east-1:a5f812db-3a52-4c24-b57b-5b12e34d6706",
+                "--dart-define",
+                "TRAVLR_COGNITO_USER_POOL_ID=us-east-1_zAZFJRftu",
+                "--dart-define",
+                "TRAVLR_COGNITO_USER_POOL_APP_CLIENT_ID=7t7qr4shfqlssvq0d3manf1pa9",
+                "--dart-define",
+                "TRAVLR_COGNITO_USER_POOL_APP_CLIENT_SECRET=ifomrq8hqjob7gnk0doq12rqtvsmhjee1g4g9l6hlblg7p0q9u5",
+                "--dart-define",
+                "TRAVLR_COGNITO_USER_POOL_REGION=us-east-1",
+                "--dart-define",
+                "TRAVLR_COGNITO_AUTH_FLOW_TYPE=USER_SRP_AUTH",
+            ]
         },
         {
-            "name": "travlr (profile mode)",
+            "name": "Production",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "travlr (release mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define",
+                "TRAVLR_COGNITO_IDENTITY_REGION=us-east-1",
+                "--dart-define",
+                "TRAVLR_COGNITO_IDENTITY_POOL_ID=us-east-1:a5f812db-3a52-4c24-b57b-5b12e34d6706",
+                "--dart-define",
+                "TRAVLR_COGNITO_USER_POOL_ID=us-east-1_zAZFJRftu",
+                "--dart-define",
+                "TRAVLR_COGNITO_USER_POOL_APP_CLIENT_ID=7t7qr4shfqlssvq0d3manf1pa9",
+                "--dart-define",
+                "TRAVLR_COGNITO_USER_POOL_APP_CLIENT_SECRET=ifomrq8hqjob7gnk0doq12rqtvsmhjee1g4g9l6hlblg7p0q9u5",
+                "--dart-define",
+                "TRAVLR_COGNITO_USER_POOL_REGION=us-east-1",
+                "--dart-define",
+                "TRAVLR_COGNITO_AUTH_FLOW_TYPE=USER_SRP_AUTH",
+            ]
         },
     ]
 }
