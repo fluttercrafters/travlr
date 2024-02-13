@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:travlr/core/app/navigation.dart';
 
 class EmptyTrips extends StatelessWidget {
-  const EmptyTrips({super.key});
+  const EmptyTrips({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
