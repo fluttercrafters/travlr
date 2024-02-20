@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.helloWorld,
+          AppLocalizations.of(context)!.appName,
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                 color: Theme.of(context).colorScheme.onPrimaryContainer,
                 fontWeight: FontWeight.bold,
