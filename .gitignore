@@ -48,3 +48,8 @@ app.*.map.json
 # Generation Files
 **.chopper.dart
 **.g.dart
+
+# Signing Files
+.signing
+**.keystore
+**.jks
